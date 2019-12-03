@@ -31,7 +31,10 @@ class BlockChain(object):
         return block
 
     def create_new_transaction(self,sender,recipient,amount):
-        self.current_block_transactions.append({'sender':sender, 'recipient': recipient,'amount': amount})
+        self.current_block_transactions.append({
+            'sender':sender,
+            'recipient': recipient,
+            'amount': amount})
         return True
 
     def create_proof_of_work(self,previous_proof):
