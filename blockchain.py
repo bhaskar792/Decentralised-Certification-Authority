@@ -17,7 +17,7 @@ class Block(object):
     #sha256 and encode are self explanatory
 
     def __repr__(self):
-        return "{} - {} - {} - {} - {}".format(self.index,self.proof,self.previous_hash,self.transactions,self.timestamp)
+        return "{} - {} - {} - {} - {}".format(str(self.index),str(self.proof),str(self.previous_hash),str(self.transactions),str(self.timestamp))
     #method for representing
 class BlockChain(object):
     def __init__(self):
@@ -68,9 +68,50 @@ class BlockChain(object):
 blockchain = BlockChain()
 blockchain.create_new_block(proof=0, previous_hash=0)
 
-print("Before Mining")
-print(blockchain.chain)
-blockchain.mine_block('miner')
+#from uudi import uuid4
 
-print(" After Mining")
-print(blockchain.chain)
+import requests
+from flask_wtf import FlaskForm
+from flask import Flask,render_template,flash,request,url_for
+from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
+
+app = Flask(__name__,template_folder='templates')
+app.config.from_object(__name__)
+app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
+blockchain.mine_block('address')
+ch=blockchain.chain
+
+
+#node_address=uuid4().hex #unique address for current node
+class create_transaction(FlaskForm):
+    sender=StringField('sender')
+    recipient=StringField('recipient')
+    amount=StringField('amount')
+    submit=SubmitField('create_transaction ')
+
+
+class mine1(FlaskForm):
+    miner_address = StringField('miner_address')
+    mine = SubmitField('mine')
+
+@app.route('/mine',methods=['POST','GET'])
+def mine():
+
+    return render_template('mine.html',your_list=ch)
+@app.route('/transaction',methods=['POST','GET'])
+def create_transactions():
+    form=create_transaction()
+    form1= mine1()
+    if form.is_submitted():
+        sender=str(form.sender._value())
+        recipient=str(form.recipient._value())
+        amount=str(form.amount._value())
+        blockchain.create_new_transaction(sender,recipient,amount)
+    if form1.is_submitted():
+        blockchain.mine_block(str(form1.miner_address._value()))
+
+
+    return render_template('transaction.html', form=form,form1=form1)
+
+if __name__=='__main__':
+    app.run(debug=True)
