@@ -11,9 +11,31 @@
     <body>
 
         <div class="container">
+            {% block transaction %}
+    <div class="mine_m">
+        <form method="POST" action="">
+            {{form1.hidden_tag()}}
+            <fieldset class="form1-group">
+            <legend class="border-bottom mb-4">Mine new Block</legend>
+                <div class="form1-group">
+                    {{ form1.miner_address.label(class="form-control-label") }}
+                    {{ form1.miner_address(class="form-control form-control-lg") }}
+                </div>
+             </fieldset>
+
+            <div class="form1-group">
+                {{ form1.mine(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+    {%if form1.is_submitted()%}
+                <h4>New Block Mined</h4>
+            {% endif %}
+{% endblock transaction %}
             {% for your_list_element in your_list %}
       <p>{{ your_list_element }} </p>
             {% endfor %}
+
         </div>
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

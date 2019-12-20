@@ -1,8 +1,8 @@
 import time
 import hashlib
 
-first=1
 
+first=1
 
 class Block(object):
     def __init__(self,index,proof,previous_hash,transactions,timestamp=None):
@@ -16,7 +16,6 @@ class Block(object):
             first = 0
         else:
             self.timestamp=time.time()
-
 
     def get_block_hash(self):
         block_string="{}{}{}{}{}".format(self.index,self.proof,self.previous_hash,self.transactions,self.timestamp)
@@ -86,14 +85,11 @@ import queue
 class recieve(Thread,BlockChain):
     def run(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.bind(('127.0.0.1', 1234))
-        s.listen()
-
-        clientsocket, address = s.accept()
+        s.connect(('127.0.0.1', 1234))
+        print(s.recv(1024))
+        clientsocket = s
         q.put(clientsocket)
 
-        print(f"connection from {address} has been established!")
-        clientsocket.send(bytes("welcome to the server", "utf-8"))
 
         #recieving
         while True:
@@ -116,7 +112,6 @@ class recieve(Thread,BlockChain):
                             print(message)
                             recipient_sock=message
                             break
-
                     while True:
                         mess = clientsocket.recv(1024)
                         if mess:
@@ -124,12 +119,9 @@ class recieve(Thread,BlockChain):
                             print(message)
                             amount_sock=message
                             break
-
                     print(sender_sock+recipient_sock+amount_sock)
-
-                    blockchain.create_new_transaction(sender_sock,amount_sock,recipient_sock)
-
-                    print(blockchain.current_block_transactions)
+                    blockchain
+                    blockchain.create_new_transaction(sender_sock,recipient_sock,amount_sock)
                 if message=='mine block':
                     while True:
                         mess = clientsocket.recv(1024)
@@ -211,7 +203,7 @@ class flask(Thread):
 
         if __name__=='__main__':
 
-            app.run(debug=True,port=5000,use_reloader=False)
+            app.run(debug=True,port=5001,use_reloader=False)
 clientsocket = q.get(timeout=20)
 f=flask()
 f.run()

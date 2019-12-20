@@ -34,23 +34,4 @@
 
 
 
-    <div class="mine_m">
-        <form method="POST" action="">
-            {{form.hidden_tag()}}
-            <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Mine new Block</legend>
-                <div class="form-group">
-                    {{ form1.miner_address.label(class="form-control-label") }}
-                    {{ form1.miner_address(class="form-control form-control-lg") }}
-                </div>
-             </fieldset>
-
-            <div class="form-group">
-                {{ form1.mine(class="btn btn-outline-info") }}
-            </div>
-        </form>
-    </div>
-    {%if form1.is_submitted()%}
-                <h4>New Block Mined</h4>
-            {% endif %}
 {% endblock transaction %}
